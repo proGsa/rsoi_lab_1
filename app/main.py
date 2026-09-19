@@ -9,6 +9,7 @@ from app.models import Person
 from app.schemas import (
     PersonRequest,
     PersonResponse,
+    PersonUpdate,
     ValidationErrorResponse,
 )
 
@@ -33,8 +34,6 @@ async def validation_exception_handler(
         }
     )
 
-
-# Убираем автоматически добавляемый FastAPI ответ 422 из Swagger
 def custom_openapi():
     if app.openapi_schema:
         return app.openapi_schema
@@ -78,7 +77,7 @@ def get_person(
 
 @app.patch(
     "/api/v1/persons/{person_id}",
-    response_model=PersonResponse,
+    response_model=PersonUpdate,
     responses={
         400: {
             "description": "Invalid data",
