@@ -101,14 +101,22 @@ def update_person(
             detail="Person not found"
         )
 
+    print("BEFORE:", person.id, person.name, person.age, person.address, person.work)
+
     person.name = person_request.name
     person.address = person_request.address
 
+    print("AFTER SET:", person.id, person.name, person.age, person.address, person.work)
+
     db.commit()
+
+    print("AFTER COMMIT:", person.id, person.name, person.age, person.address, person.work)
+
     db.refresh(person)
 
-    return person
+    print("AFTER REFRESH:", person.id, person.name, person.age, person.address, person.work)
 
+    return person
 
 @app.delete("/api/v1/persons/{person_id}")
 def delete_person(
