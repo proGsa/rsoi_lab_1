@@ -31,10 +31,6 @@ jobs:
         run: |
           pytest
 
-      - name: Build Docker image
-        run: |
-          docker build -t person-service .
-
       - name: Run API Tests
         uses: matt-ball/newman-action@master
         with:
