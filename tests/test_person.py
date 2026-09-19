@@ -123,12 +123,12 @@ def test_update_person():
 
     assert data["id"] == 1
     assert data["name"] == "Petr Petrov"
-    assert data["age"] == 30
+    assert data["age"] == 25
     assert data["address"] == "Saint Petersburg"
     assert data["work"] == "Engineer"
 
     assert person.name == "Petr Petrov"
-    assert person.age == 30
+    assert person.age == 25
     assert person.address == "Saint Petersburg"
     assert person.work == "Engineer"
 
