@@ -77,7 +77,7 @@ def get_person(
 
 @app.patch(
     "/api/v1/persons/{person_id}",
-    response_model=PersonUpdate,
+    response_model=PersonResponse,
     responses={
         400: {
             "description": "Invalid data",
@@ -90,7 +90,7 @@ def get_person(
 )
 def update_person(
     person_id: int,
-    person_request: PersonRequest,
+    person_request: PersonUpdate,
     db: Session = Depends(get_db)
 ):
     person = db.query(Person).filter(Person.id == person_id).first()
@@ -101,14 +101,10 @@ def update_person(
             detail="Person not found"
         )
 
-    person.name = person_request.name
-    person.address = person_request.address
+    data = person_request.model_dump(exclude_unset=True)
 
-    if person_request.age is not None:
-        person.age = person_request.age
-
-    if person_request.work is not None:
-        person.work = person_request.work
+    for field, value in data.items():
+        setattr(person, field, value)
 
     db.commit()
     db.refresh(person)
