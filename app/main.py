@@ -101,10 +101,8 @@ def update_person(
             detail="Person not found"
         )
 
-    data = person_request.model_dump(exclude_unset=True)
-
-    for field, value in data.items():
-        setattr(person, field, value)
+    person.name = person_request.name
+    person.address = person_request.address
 
     db.commit()
     db.refresh(person)
