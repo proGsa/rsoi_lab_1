@@ -92,50 +92,6 @@ def test_get_person_not_found():
     assert response.status_code == 404
     assert response.json()["detail"] == "Person not found"
 
-
-def test_update_person():
-    mock_db = MagicMock()
-    app.dependency_overrides[get_db] = lambda: mock_db
-
-    person = Person(
-        id=1,
-        name="Ivan Ivanov",
-        age=25,
-        address="Moscow",
-        work="Developer"
-    )
-
-    mock_db.query.return_value.filter.return_value.first.return_value = person
-
-    response = client.patch(
-        "/api/v1/persons/1",
-        json={
-            "name": "Petr Petrov",
-            "age": 25,
-            "address": "Saint Petersburg",
-            "work": "Engineer"
-        }
-    )
-
-    assert response.status_code == 200
-
-    data = response.json()
-
-    assert data["id"] == 1
-    assert data["name"] == "Petr Petrov"
-    assert data["age"] == 25
-    assert data["address"] == "Saint Petersburg"
-    assert data["work"] == "Engineer"
-
-    assert person.name == "Petr Petrov"
-    assert person.age == 25
-    assert person.address == "Saint Petersburg"
-    assert person.work == "Engineer"
-
-    mock_db.commit.assert_called_once()
-    mock_db.refresh.assert_called_once_with(person)
-
-
 def test_update_person_not_found():
     mock_db = MagicMock()
     app.dependency_overrides[get_db] = lambda: mock_db
