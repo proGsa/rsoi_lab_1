@@ -111,7 +111,7 @@ def test_update_person():
         "/api/v1/persons/1",
         json={
             "name": "Petr Petrov",
-            "age": 30,
+            "age": 25,
             "address": "Saint Petersburg",
             "work": "Engineer"
         }
