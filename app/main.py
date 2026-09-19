@@ -103,9 +103,13 @@ def update_person(
         )
 
     person.name = person_request.name
-    person.age = person_request.age
     person.address = person_request.address
-    person.work = person_request.work
+
+    if person_request.age is not None:
+        person.age = person_request.age
+
+    if person_request.work is not None:
+        person.work = person_request.work
 
     db.commit()
     db.refresh(person)
